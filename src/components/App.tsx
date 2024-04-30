@@ -17,7 +17,6 @@ function App() {
         </div>
         <DaytimeLowtideFinder />
       </main>
-      <footer>credits go here</footer>
     </div>
   );
 }

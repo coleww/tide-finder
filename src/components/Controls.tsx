@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import './Controls.css';
 
 type ControlsProps = {
   stationId: string;
   tideTarget: number;
   tideThreshold: number;
+  deselectAllDates: () => void;
+  selectAllDates: () => void;
   setStationId: (id: string) => void;
   setTideTarget: (target: number) => void;
   setTideThreshold: (target: number) => void;
@@ -11,12 +14,26 @@ type ControlsProps = {
 
 function Controls({
   stationId,
+  deselectAllDates,
+  selectAllDates,
   setStationId,
   tideTarget,
   setTideTarget,
   tideThreshold,
   setTideThreshold,
 }: ControlsProps) {
+  const [isAllSelected, setIsAllSelected] = useState(false);
+
+  const toggleSelectAll = () => {
+    if (isAllSelected) {
+      deselectAllDates();
+      setIsAllSelected(false);
+    } else {
+      selectAllDates();
+      setIsAllSelected(true);
+    }
+  };
+
   return (
     <div className="controls-container">
       <div className="controls-box">
@@ -72,7 +89,12 @@ function Controls({
       <div className="download-wrapper">
         <button>download calendar</button>{' '}
         <label>
-          Select All <input type="checkbox" />
+          Select All{' '}
+          <input
+            type="checkbox"
+            checked={isAllSelected}
+            onChange={toggleSelectAll}
+          />
         </label>
       </div>
       {/* TODO: https://www.npmjs.com/package/ics create calendar download. select low tides to save. */}

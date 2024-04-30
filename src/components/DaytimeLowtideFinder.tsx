@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getStationData } from '../utils/api';
-import { type StationData } from '../utils/types';
+import { type DaytimeLowtideData, type StationData } from '../utils/types';
 import Controls from './Controls';
 import Results from './Results';
 
@@ -18,11 +18,52 @@ function getQueryParam() {
 
 function DaytimeLowtideFinder() {
   const [stationId, setStationId] = useState(getQueryParam());
-
   const [tideTarget, setTideTarget] = useState(0);
-
   const [tideThreshold, setTideThreshold] = useState(0);
   const [stationData, setStationData] = useState<StationData>();
+
+  const [daytimeLowtideDates, setDaytimeLowtideDates] = useState<
+    DaytimeLowtideData[]
+  >([]);
+  const [selectedDates, setSelectedDates] = useState<DaytimeLowtideData[]>([]);
+
+  const updateDaytimeLowtides = useCallback((data: DaytimeLowtideData[]) => {
+    setDaytimeLowtideDates(data);
+    setSelectedDates([]);
+  }, []);
+
+  const selectAllDates = () => {
+    setSelectedDates(daytimeLowtideDates);
+  };
+
+  const deselectAllDates = () => {
+    setSelectedDates([]);
+  };
+
+  const selectDate = useCallback(
+    (selectedDate: DaytimeLowtideData) => {
+      console.log('selecting', selectedDates, selectedDate);
+      setSelectedDates([...selectedDates, selectedDate]);
+    },
+    [selectedDates]
+  );
+
+  const unselectDate = useCallback(
+    (selectedDate: DaytimeLowtideData) => {
+      const i = selectedDates.findIndex(
+        date => date.sunrise === selectedDate.sunrise
+      );
+      console.log('unselecting', selectedDate, i, [
+        ...selectedDates.slice(0, i),
+        ...selectedDates.slice(i + 1, selectedDates.length),
+      ]);
+      setSelectedDates([
+        ...selectedDates.slice(0, i),
+        ...selectedDates.slice(i + 1, selectedDates.length),
+      ]);
+    },
+    [selectedDates]
+  );
 
   useEffect(() => {
     // TODO: are all NOAA tide stations 7 chars?
@@ -37,6 +78,8 @@ function DaytimeLowtideFinder() {
   return (
     <div>
       <Controls
+        deselectAllDates={deselectAllDates}
+        selectAllDates={selectAllDates}
         setStationId={setStationId}
         setTideTarget={setTideTarget}
         setTideThreshold={setTideThreshold}
@@ -45,6 +88,11 @@ function DaytimeLowtideFinder() {
         tideThreshold={tideThreshold}
       />
       <Results
+        daytimeLowtideDates={daytimeLowtideDates}
+        selectDate={selectDate}
+        selectedDates={selectedDates}
+        setDaytimeLowtideDates={updateDaytimeLowtides}
+        unselectDate={unselectDate}
         stationData={stationData}
         tideTarget={tideTarget}
         tideThreshold={tideThreshold}

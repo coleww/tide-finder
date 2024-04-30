@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { type StationData, type DaytimeLowtideData } from '../utils/types';
 import { filterTides } from '../utils/filterTides';
 import './Results.css';
@@ -9,22 +9,30 @@ type ResultsProps = {
   tideTarget: number;
   tideThreshold: number;
   stationData?: StationData;
+  daytimeLowtideDates: DaytimeLowtideData[];
+  selectDate: (date: DaytimeLowtideData) => void;
+  unselectDate: (date: DaytimeLowtideData) => void;
+  selectedDates: DaytimeLowtideData[];
+  setDaytimeLowtideDates: (dates: DaytimeLowtideData[]) => void;
 };
 
-function Results({ stationData, tideTarget, tideThreshold }: ResultsProps) {
-  const [daytimeLowtides, setDaytimeLowtides] = useState<DaytimeLowtideData[]>(
-    []
-  );
-
-  // const [selectedDates, setSelectedDates] = useState<DaytimeLowtideData[]>(
-  //   []
-  // );
-
+function Results({
+  daytimeLowtideDates,
+  stationData,
+  tideTarget,
+  tideThreshold,
+  unselectDate,
+  setDaytimeLowtideDates,
+  selectDate,
+  selectedDates,
+}: ResultsProps) {
   useEffect(() => {
     if (stationData) {
-      setDaytimeLowtides(filterTides(tideTarget, tideThreshold, stationData));
+      setDaytimeLowtideDates(
+        filterTides(tideTarget, tideThreshold, stationData)
+      );
     }
-  }, [stationData, tideTarget, tideThreshold]);
+  }, [setDaytimeLowtideDates, stationData, tideTarget, tideThreshold]);
 
   if (!stationData) return <div> loading...</div>;
   const { metadata, timezone } = stationData;
@@ -33,16 +41,23 @@ function Results({ stationData, tideTarget, tideThreshold }: ResultsProps) {
   return (
     <div className="results">
       <div className="station-title">
-        {title} - {lat},{lng}
+        <div>
+          {title} - {lat},{lng}
+        </div>
+        <div>{daytimeLowtideDates.length} results</div>
       </div>
+
       <div className="results-container">
-        {daytimeLowtides.map(dtlt => {
+        {daytimeLowtideDates.map(dtlt => {
           return (
             <Result
               key={formatDateTZ(dtlt.sunrise, timezone)}
               lowtideData={dtlt}
               timezone={timezone}
               tideTarget={tideTarget}
+              selectDate={selectDate}
+              unselectDate={unselectDate}
+              selectedDates={selectedDates}
             />
           );
         })}
