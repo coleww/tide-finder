@@ -12,7 +12,6 @@ type ResultsProps = {
 };
 
 function Results({ stationData, tideTarget, tideThreshold }: ResultsProps) {
-
   const [daytimeLowtides, setDaytimeLowtides] = useState<DaytimeLowtideData[]>(
     []
   );
@@ -27,17 +26,27 @@ function Results({ stationData, tideTarget, tideThreshold }: ResultsProps) {
     }
   }, [stationData, tideTarget, tideThreshold]);
 
-  if (!stationData) return <div> loading...</div>
+  if (!stationData) return <div> loading...</div>;
   const { metadata, timezone } = stationData;
-  const { title, lat, lng} = metadata;
+  const { title, lat, lng } = metadata;
 
   return (
     <div className="results">
-      <div className='station-title'>{title} - {lat},{lng}</div> 
-      <div className='results-container'>
-      {daytimeLowtides.map((dtlt) => {
-        return <Result key={formatDateTZ(dtlt.sunrise, timezone)} lowtideData={dtlt} timezone={timezone} tideTarget={tideTarget}/>;
-      })}</div>
+      <div className="station-title">
+        {title} - {lat},{lng}
+      </div>
+      <div className="results-container">
+        {daytimeLowtides.map(dtlt => {
+          return (
+            <Result
+              key={formatDateTZ(dtlt.sunrise, timezone)}
+              lowtideData={dtlt}
+              timezone={timezone}
+              tideTarget={tideTarget}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

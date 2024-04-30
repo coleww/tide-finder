@@ -8,7 +8,6 @@ const mockStationData = {
   },
   timezone: 'America/Los_Angeles',
   tideData: [
-
     { time: new Date('2024-04-27T13:11:01.000Z'), tide: -0.1 }, // night time low tide, 4 minutes before sunrise
     { time: new Date('2024-04-27T11:35:00.000Z'), tide: 3.499 },
     { time: new Date('2024-04-27T17:22:00.000Z'), tide: 6.177 },
@@ -25,7 +24,6 @@ const mockStationData = {
   ],
   solarData: [
     {
-
       sunrise: new Date('2024-04-27T13:15:01.000Z'),
       sunset: new Date('2024-04-28T02:58:27.000Z'),
     },
@@ -79,7 +77,6 @@ test('finds matching day time lowtides within threshold', () => {
       ],
     },
     {
-
       sunrise: new Date('2024-04-30T14:15:01.000Z'),
       sunset: new Date('2024-04-31T03:58:27.000Z'),
       tides: [
@@ -87,11 +84,10 @@ test('finds matching day time lowtides within threshold', () => {
         { time: new Date('2024-04-30T11:35:00.000Z'), tide: 3.499 },
         { time: new Date('2024-04-30T17:22:00.000Z'), tide: 6.177 },
         { time: new Date('2024-04-31T03:59:00.000Z'), tide: -0.449 }, // night time low tide, 1 minute after sunset
-      ]
-    }
+      ],
+    },
   ]);
 });
-
 
 test('filters out night time low tides below target', () => {
   const filteredTides = filterTides(0, 0, {

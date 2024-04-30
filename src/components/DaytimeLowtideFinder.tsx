@@ -44,7 +44,11 @@ function DaytimeLowtideFinder() {
         tideTarget={tideTarget}
         tideThreshold={tideThreshold}
       />
-      <Results stationData={stationData} tideTarget={tideTarget} tideThreshold={tideThreshold}/>
+      <Results
+        stationData={stationData}
+        tideTarget={tideTarget}
+        tideThreshold={tideThreshold}
+      />
     </div>
   );
 }

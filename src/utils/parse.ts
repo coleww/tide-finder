@@ -1,4 +1,4 @@
-import { type Metadata, TidePrediction, TidePredictionRes } from "./types";
+import { type Metadata, TidePrediction, TidePredictionRes } from './types';
 
 export function formatDateNOAA(date: Date) {
   const dd = String(date.getDate()).padStart(2, '0');
@@ -8,17 +8,17 @@ export function formatDateNOAA(date: Date) {
 }
 
 export function formatDateTZ(date: Date, tz: string) {
-  return date.toLocaleDateString("en-US", {timeZone: tz})
+  return date.toLocaleDateString('en-US', { timeZone: tz });
 }
 
 export function formatTimeTZ(date: Date, tz: string) {
-  return date.toLocaleTimeString("en-US", {timeZone: tz})
+  return date.toLocaleTimeString('en-US', { timeZone: tz });
 }
 
 export function parseTideTimestamp(timestamp: string) {
   // predictions API returns UTC time as "2024-04-30 18:15"
   // need to format as UTC otherwise Date constructor parses as local time
-  return timestamp.split(' ').join('T') + 'Z'
+  return timestamp.split(' ').join('T') + 'Z';
 }
 
 export function parseMetadata(metadata: any): Metadata | undefined {
@@ -34,8 +34,8 @@ export function parseMetadata(metadata: any): Metadata | undefined {
 export function parseTideData(tideData: any): TidePrediction[] | undefined {
   return tideData?.predictions?.map((tidePrediction: TidePredictionRes) => {
     return {
-      t: new Date(parseTideTimestamp(tidePrediction.t)),
-      v: Number(tidePrediction.v),
+      time: new Date(parseTideTimestamp(tidePrediction.t)),
+      tide: Number(tidePrediction.v),
     };
   });
 }

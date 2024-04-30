@@ -31,7 +31,8 @@ export async function getStationData(
   let metadata, tideData, timezoneData;
   try {
     const metadataRes = await fetch(
-      `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`, { cache: "force-cache" }
+      `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`,
+      { cache: 'force-cache' }
     );
     if (metadataRes.ok) {
       metadata = await metadataRes.json();
@@ -45,7 +46,8 @@ export async function getStationData(
 
   try {
     const tideDataRes = await fetch(
-      `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${todayString}&end_date=${endDateString}&station=${stationId}&product=predictions&datum=MLLW&time_zone=gmt&interval=hilo&units=english&application=daytime_lowtide_finder&format=json`, { cache: "force-cache" }
+      `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${todayString}&end_date=${endDateString}&station=${stationId}&product=predictions&datum=MLLW&time_zone=gmt&interval=hilo&units=english&application=daytime_lowtide_finder&format=json`,
+      { cache: 'force-cache' }
     );
 
     if (tideDataRes.ok) {
@@ -59,7 +61,7 @@ export async function getStationData(
   }
 
   const parsedMetadata = parseMetadata(metadata);
-  const parsedTideData = parseTideData(tideData)
+  const parsedTideData = parseTideData(tideData);
 
   if (!parsedMetadata || !parsedTideData) return;
 
@@ -67,7 +69,8 @@ export async function getStationData(
 
   try {
     const timezoneRes = await fetch(
-      `https://www.timeapi.io/api/TimeZone/coordinate?latitude=${lat}&longitude=${lng}`, { cache: "force-cache", mode: 'no-cors' }
+      `https://www.timeapi.io/api/TimeZone/coordinate?latitude=${lat}&longitude=${lng}`,
+      { cache: 'force-cache', mode: 'no-cors' }
     );
 
     if (timezoneRes.ok) {
@@ -79,17 +82,13 @@ export async function getStationData(
     // If we can't get the timezone data, just show UTC or locale it's fine
   }
 
-  const timezone = timezoneData?.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const timezone =
+    timezoneData?.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   return {
     metadata: parsedMetadata,
     tideData: parsedTideData,
     timezone: timezone,
-    solarData: getSolarData(
-      lat,
-      lng,
-      today,
-      oneYearFromToday
-    ),
+    solarData: getSolarData(lat, lng, today, oneYearFromToday),
   };
 }

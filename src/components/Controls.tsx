@@ -19,7 +19,7 @@ function Controls({
 }: ControlsProps) {
   return (
     <div className="controls-container">
-      <div className='controls-box'>
+      <div className="controls-box">
         <div className="control-wrapper">
           <input
             className="control-input"
@@ -69,15 +69,13 @@ function Controls({
         </div>
       </div>
 
-      <div className='download-wrapper'>
-        <button >download calendar</button>{' '}
+      <div className="download-wrapper">
+        <button>download calendar</button>{' '}
         <label>
           Select All <input type="checkbox" />
         </label>
       </div>
-        {/* TODO: https://www.npmjs.com/package/ics create calendar download. select low tides to save. */}
-
-      
+      {/* TODO: https://www.npmjs.com/package/ics create calendar download. select low tides to save. */}
     </div>
   );
 }
