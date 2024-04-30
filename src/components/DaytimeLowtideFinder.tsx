@@ -25,7 +25,8 @@ function DaytimeLowtideFinder() {
   const [stationData, setStationData] = useState<StationData>();
 
   useEffect(() => {
-    if (stationId) {
+    // TODO: are all NOAA tide stations 7 chars?
+    if (stationId.length === 7) {
       updateQueryParam(stationId);
       getStationData(stationId).then(data => {
         setStationData(data);

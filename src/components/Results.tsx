@@ -1,17 +1,25 @@
 import { useEffect, useState } from 'react';
-import { type StationData } from '../utils/types';
-import { filterTides, type DaytimeLowtideData } from '../utils/filterTides';
+import { type StationData, type DaytimeLowtideData } from '../utils/types';
+import { filterTides } from '../utils/filterTides';
 import './Results.css';
+import Result from './Result';
+import { formatDateTZ } from '../utils/parse';
 
 type ResultsProps = {
   tideTarget: number;
   tideThreshold: number;
   stationData?: StationData;
 };
+
 function Results({ stationData, tideTarget, tideThreshold }: ResultsProps) {
+
   const [daytimeLowtides, setDaytimeLowtides] = useState<DaytimeLowtideData[]>(
     []
   );
+
+  // const [selectedDates, setSelectedDates] = useState<DaytimeLowtideData[]>(
+  //   []
+  // );
 
   useEffect(() => {
     if (stationData) {
@@ -19,17 +27,19 @@ function Results({ stationData, tideTarget, tideThreshold }: ResultsProps) {
     }
   }, [stationData, tideTarget, tideThreshold]);
 
+  if (!stationData) return <div> loading...</div>
+  const { metadata, timezone } = stationData;
+  const { title, lat, lng} = metadata;
+
   return (
     <div className="results">
-      {daytimeLowtides.map(dtlt => {
-        return <div className="result">{JSON.stringify(dtlt)}</div>;
-      })}
+      <div className='station-title'>{title} - {lat},{lng}</div> 
+      <div className='results-container'>
+      {daytimeLowtides.map((dtlt) => {
+        return <Result key={formatDateTZ(dtlt.sunrise, timezone)} lowtideData={dtlt} timezone={timezone} tideTarget={tideTarget}/>;
+      })}</div>
     </div>
   );
 }
-
-// format mdy date
-// format rise/set and tide times
-// highlight the matching tides
 
 export default Results;

@@ -26,3 +26,9 @@ export type StationData = {
   metadata: Metadata;
   timezone: string;
 };
+
+export type DaytimeLowtideData = {
+  sunrise: Date;
+  sunset: Date;
+  tides: TidePrediction[];
+};

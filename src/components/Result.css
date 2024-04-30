@@ -1,0 +1,32 @@
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid lightslategrey;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.date {
+  margin: 6px;
+  display:flex;
+  align-items:center;
+  gap: 6px;
+}
+
+.result-table {
+  width: 200px;
+}
+
+.low-tide-result {
+  background-color: aqua;
+}
+
+.sunrise {
+  border-bottom: 1px solid black;
+}
+
+.sunset {
+  border-top: 1px solid black;
+}

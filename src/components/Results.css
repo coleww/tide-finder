@@ -5,8 +5,15 @@
   gap: 6px;
 }
 
-.result {
-  border: 1px solid black;
-  padding: 6px;
-  max-width: 33%;
+
+.results-container {
+  margin: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+
+.station-title {
+  text-align: center;
 }

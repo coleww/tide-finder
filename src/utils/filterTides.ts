@@ -1,17 +1,14 @@
-import { type StationData, type TidePrediction } from './types';
+import { type StationData, type TidePrediction, type DaytimeLowtideData } from './types';
+import { formatDateTZ} from './parse';
 
-export type DaytimeLowtideData = {
-  sunrise: Date;
-  sunset: Date;
-  tides: TidePrediction[];
-};
 
 export function filterTides(tideTarget: number, threshold: number, stationData: StationData) {
   const { tideData, solarData, timezone } = stationData;
 
+  // TODO: memoize this to improve perf when changing tide target
   const tidesByDate = tideData.reduce<{ [key: string]: TidePrediction[] }>(
     (acc, tidePrediction) => {
-      const date = new Date(tidePrediction.t).toLocaleDateString("en-US", {timeZone: timezone});
+      const date = formatDateTZ(tidePrediction.t, timezone);
       acc[date] = acc[date] || [];
       acc[date].push(tidePrediction);
       return acc;
@@ -20,7 +17,7 @@ export function filterTides(tideTarget: number, threshold: number, stationData: 
   );
 
   return solarData.reduce<DaytimeLowtideData[]>((acc, solarDay) => {
-    const tides = tidesByDate[solarDay.sunrise.toLocaleDateString("en-US", {timeZone: timezone})];
+    const tides = tidesByDate[formatDateTZ(solarDay.sunrise, timezone)];
 
     const sunriseTarget = new Date(solarDay.sunrise.getTime() - threshold * 60000);
     const sunsetTarget = new Date(solarDay.sunset.getTime() + threshold * 60000);

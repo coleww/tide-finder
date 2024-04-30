@@ -20,7 +20,6 @@ function Controls({
   return (
     <div className="controls-container">
       <div className='controls-box'>
-        {/* Debounce input? IDs appear to always be 7 chars? */}
         <div className="control-wrapper">
           <input
             className="control-input"

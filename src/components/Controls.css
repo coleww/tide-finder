@@ -16,6 +16,8 @@
   padding: 2px;
   margin: 6px;
   border-width: 0px;
+  border-bottom: 1px solid darkslategrey;
+  background-color: lightsteelblue;
 }
 
 .control-wrapper {

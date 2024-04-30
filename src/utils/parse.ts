@@ -7,6 +7,14 @@ export function formatDateNOAA(date: Date) {
   return `${yyyy}${mm}${dd}`;
 }
 
+export function formatDateTZ(date: Date, tz: string) {
+  return date.toLocaleDateString("en-US", {timeZone: tz})
+}
+
+export function formatTimeTZ(date: Date, tz: string) {
+  return date.toLocaleTimeString("en-US", {timeZone: tz})
+}
+
 export function parseTideTimestamp(timestamp: string) {
   // predictions API returns UTC time as "2024-04-30 18:15"
   // need to format as UTC otherwise Date constructor parses as local time
