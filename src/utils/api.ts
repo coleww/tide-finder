@@ -82,7 +82,7 @@ export async function getStationData(
   let metadata, tideData;
   try {
     const metadataRes = await fetch(
-      `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`
+      `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`, { cache: "force-cache" }
     );
     if (metadataRes.ok) {
       metadata = await metadataRes.json();
@@ -95,7 +95,7 @@ export async function getStationData(
 
   try {
     const tideDataRes = await fetch(
-      `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${todayString}&end_date=${endDateString}&station=${stationId}&product=predictions&datum=MLLW&time_zone=gmt&interval=hilo&units=english&application=daytime_lowtide_finder&format=json`
+      `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${todayString}&end_date=${endDateString}&station=${stationId}&product=predictions&datum=MLLW&time_zone=gmt&interval=hilo&units=english&application=daytime_lowtide_finder&format=json`, { cache: "force-cache" }
     );
 
     if (tideDataRes.ok) {
