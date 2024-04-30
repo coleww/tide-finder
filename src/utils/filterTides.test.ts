@@ -6,6 +6,7 @@ const mockStationData = {
     lat: 123,
     lng: 456,
   },
+  timezone: 'America/Los_Angeles',
   tideData: [
 
     { t: new Date('2024-04-27T13:11:01.000Z'), v: -0.1 }, // night time low tide, 4 minutes before sunrise

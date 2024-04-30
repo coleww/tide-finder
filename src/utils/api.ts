@@ -28,7 +28,7 @@ export async function getStationData(
   const todayString = formatDateNOAA(today);
   const endDateString = formatDateNOAA(oneYearFromToday);
 
-  let metadata, tideData;
+  let metadata, tideData, timezoneData;
   try {
     const metadataRes = await fetch(
       `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`, { cache: "force-cache" }
@@ -39,6 +39,7 @@ export async function getStationData(
       throw new Error();
     }
   } catch (e) {
+    // If we can't get the station data, we can't do anything
     return;
   }
 
@@ -53,6 +54,7 @@ export async function getStationData(
       throw new Error();
     }
   } catch (e) {
+    // If we can't get the predictions data, we can't do anything
     return;
   }
 
@@ -61,12 +63,31 @@ export async function getStationData(
 
   if (!parsedMetadata || !parsedTideData) return;
 
+  const { lat, lng } = parsedMetadata;
+
+  try {
+    const timezoneRes = await fetch(
+      `https://www.timeapi.io/api/TimeZone/coordinate?latitude=${lat}&longitude=${lng}`, { cache: "force-cache", mode: 'no-cors' }
+    );
+
+    if (timezoneRes.ok) {
+      timezoneData = await timezoneRes.json();
+    } else {
+      throw new Error();
+    }
+  } catch (e) {
+    // If we can't get the timezone data, just show UTC or locale it's fine
+  }
+
+  const timezone = timezoneData?.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   return {
     metadata: parsedMetadata,
     tideData: parsedTideData,
+    timezone: timezone,
     solarData: getSolarData(
-      parsedMetadata.lat,
-      parsedMetadata.lng,
+      lat,
+      lng,
       today,
       oneYearFromToday
     ),

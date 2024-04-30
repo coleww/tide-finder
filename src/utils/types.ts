@@ -24,4 +24,5 @@ export type StationData = {
   tideData: TidePrediction[];
   solarData: SolarData[];
   metadata: Metadata;
+  timezone: string;
 };
