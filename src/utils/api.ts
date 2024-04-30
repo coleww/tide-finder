@@ -1,57 +1,6 @@
 import { solarCalc } from './solarCalc';
-
-type TidePredictionRes = {
-  t: string;
-  v: string;
-  type: string;
-};
-
-export type TidePrediction = {
-  t: Date;
-  v: number;
-};
-
-export type Metadata = {
-  title: string;
-  lat: number;
-  lng: number;
-};
-
-export type SolarData = {
-  sunrise: Date;
-  sunset: Date;
-};
-
-export type StationData = {
-  tideData: TidePrediction[];
-  solarData: SolarData[];
-  metadata: Metadata;
-};
-
-function formatDate(date: Date) {
-  const dd = String(date.getDate()).padStart(2, '0');
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const yyyy = date.getFullYear();
-  return `${yyyy}${mm}${dd}`;
-}
-
-function parseMetadata(metadata: any): Metadata {
-  const station = metadata?.stations?.at(0);
-  return {
-    title: `${station?.name}, ${station?.state}`,
-    lat: Number(station?.lat),
-    lng: Number(station?.lng),
-  };
-}
-
-function parseTideData(tideData: any): TidePrediction[] {
-  return tideData?.predictions?.map((tidePrediction: TidePredictionRes) => {
-    return {
-      t: new Date(tidePrediction.t),
-      v: Number(tidePrediction.v),
-    };
-  });
-}
+import { parseTideData, parseMetadata, formatDateNOAA } from './parse';
+import { type SolarData, type StationData } from './types';
 
 function getSolarData(
   lat: number,
@@ -76,8 +25,8 @@ export async function getStationData(
   const today = new Date();
   const oneYearFromToday = new Date();
   oneYearFromToday.setFullYear(new Date().getFullYear() + 1);
-  const todayString = formatDate(today);
-  const endDateString = formatDate(oneYearFromToday);
+  const todayString = formatDateNOAA(today);
+  const endDateString = formatDateNOAA(oneYearFromToday);
 
   let metadata, tideData;
   try {
@@ -108,10 +57,13 @@ export async function getStationData(
   }
 
   const parsedMetadata = parseMetadata(metadata);
+  const parsedTideData = parseTideData(tideData)
+
+  if (!parsedMetadata || !parsedTideData) return;
 
   return {
     metadata: parsedMetadata,
-    tideData: parseTideData(tideData),
+    tideData: parsedTideData,
     solarData: getSolarData(
       parsedMetadata.lat,
       parsedMetadata.lng,

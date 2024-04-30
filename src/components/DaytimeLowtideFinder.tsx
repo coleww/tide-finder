@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getStationData } from '../utils/api';
-import { type StationData } from '../utils/api';
+import { type StationData } from '../utils/types';
 import Controls from './Controls';
 import Results from './Results';
 

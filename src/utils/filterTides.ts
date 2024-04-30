@@ -1,4 +1,4 @@
-import { type StationData, type TidePrediction } from './api';
+import { type StationData, type TidePrediction } from './types';
 
 export type DaytimeLowtideData = {
   sunrise: Date;

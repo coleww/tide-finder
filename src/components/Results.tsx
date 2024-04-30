@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { type StationData } from '../utils/api';
+import { type StationData } from '../utils/types';
 import { filterTides, type DaytimeLowtideData } from '../utils/filterTides';
 import './Results.css';
 
