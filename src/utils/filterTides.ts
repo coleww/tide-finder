@@ -1,21 +1,18 @@
 import { type StationData, type TidePrediction } from "./api";
 
-// For each date with a day time low tide below tide target, 
-// return sunrise/sunset and all tide predictions for that day
 export type DaytimeLowtideData = {
   sunrise: Date;
   sunset: Date;
   tides: TidePrediction[]
 }
 
-
 export function filterTides (tideTarget: number, stationData: StationData) {
-  const { predictions, solarData} = stationData;
+  const { tideData, solarData} = stationData;
 
-  const tidesByDate = predictions.reduce<{[key: string]: TidePrediction[]}>((acc, prediction) => {
-    const date = new Date(prediction.t).toDateString();
+  const tidesByDate = tideData.reduce<{[key: string]: TidePrediction[]}>((acc, tidePrediction) => {
+    const date = new Date(tidePrediction.t).toDateString();
     acc[date] = acc[date] || []
-    acc[date].push(prediction)
+    acc[date].push(tidePrediction)
     return acc;
   }, {});
 

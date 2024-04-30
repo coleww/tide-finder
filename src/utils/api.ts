@@ -3,13 +3,12 @@ import { solarCalc } from "./solarCalc";
 type TidePredictionRes = {
   t: string;
   v: string;
-  type: 'H' | 'L';
+  type: string;
 }
 
 export type TidePrediction = {
   t: Date; 
   v: number; 
-  type: 'H' | 'L';
 }
 
 export type Metadata = {
@@ -24,7 +23,7 @@ export type SolarData = {
 }
 
 export type StationData = {
-  predictions: TidePrediction[];
+  tideData: TidePrediction[];
   solarData: SolarData[];
   metadata: Metadata;
 }
@@ -45,12 +44,11 @@ function parseMetadata(metadata: any): Metadata {
   }
 }
 
-function parseTidePredictions(tidePredictions: any): TidePrediction[] {
-  return tidePredictions?.predictions?.map((tidePrediction: TidePredictionRes) => {
+function parseTideData(tideData: any): TidePrediction[] {
+  return tideData?.predictions?.map((tidePrediction: TidePredictionRes) => {
     return {
       t: new Date(tidePrediction.t),
       v: Number(tidePrediction.v),
-      type: tidePrediction.type,
     }
   })
 }
@@ -63,28 +61,43 @@ function getSolarData(lat: number, lng: number, startDate: Date, endDate: Date):
  return solarData
 }
 
-export async function getStationData(stationId: string): Promise<StationData> {
+export async function getStationData(stationId: string): Promise<StationData | undefined> {
   const today = new Date();
   const oneYearFromToday = new Date();
   oneYearFromToday.setFullYear(new Date().getFullYear() + 1);
   const todayString = formatDate(today);
   const endDateString = formatDate(oneYearFromToday);
 
-  const metadataRes = await fetch(`https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`);
-  const metadata = await metadataRes.json();
+  let metadata, tideData;
+  try {
+    const metadataRes = await fetch(`https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`);
+    if (metadataRes.ok) {
+      metadata = await metadataRes.json();
+    } else {
+      throw new Error();
+    }
+  } catch (e) {
+    return;
+  }
 
-  // TODO handle errors. If station metadata doesn't exist, bail here
 
-  const predictionsRes = await fetch(`https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${todayString}&end_date=${endDateString}&station=${stationId}&product=predictions&datum=MLLW&time_zone=gmt&interval=hilo&units=english&application=daytime_lowtide_finder&format=json`)
-  const predictions = await predictionsRes.json();
-  
-  // TODO handle errors
+  try {
+    const tideDataRes = await fetch(`https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${todayString}&end_date=${endDateString}&station=${stationId}&product=predictions&datum=MLLW&time_zone=gmt&interval=hilo&units=english&application=daytime_lowtide_finder&format=json`)
+
+    if (tideDataRes.ok) {
+      tideData = await tideDataRes.json();
+    } else {
+      throw new Error();
+    }
+  } catch (e) {
+    return;
+  }
 
   const parsedMetadata = parseMetadata(metadata)
 
   return {
     metadata: parsedMetadata,
-    predictions: parseTidePredictions(predictions),
+    tideData: parseTideData(tideData),
     solarData: getSolarData(parsedMetadata.lat, parsedMetadata.lng, today, oneYearFromToday),
   }
 }
