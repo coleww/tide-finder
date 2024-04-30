@@ -5,18 +5,19 @@ import './Results.css';
 
 type ResultsProps = {
   tideTarget: number;
+  tideThreshold: number;
   stationData?: StationData;
 };
-function Results({ stationData, tideTarget }: ResultsProps) {
+function Results({ stationData, tideTarget, tideThreshold }: ResultsProps) {
   const [daytimeLowtides, setDaytimeLowtides] = useState<DaytimeLowtideData[]>(
     []
   );
 
   useEffect(() => {
     if (stationData) {
-      setDaytimeLowtides(filterTides(tideTarget, stationData));
+      setDaytimeLowtides(filterTides(tideTarget, tideThreshold, stationData));
     }
-  }, [stationData, tideTarget]);
+  }, [stationData, tideTarget, tideThreshold]);
 
   return (
     <div className="results">

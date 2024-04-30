@@ -20,6 +20,8 @@ function DaytimeLowtideFinder() {
   const [stationId, setStationId] = useState(getQueryParam());
 
   const [tideTarget, setTideTarget] = useState(0);
+
+  const [tideThreshold, setTideThreshold] = useState(0);
   const [stationData, setStationData] = useState<StationData>();
 
   useEffect(() => {
@@ -36,10 +38,12 @@ function DaytimeLowtideFinder() {
       <Controls
         setStationId={setStationId}
         setTideTarget={setTideTarget}
+        setTideThreshold={setTideThreshold}
         stationId={stationId}
         tideTarget={tideTarget}
+        tideThreshold={tideThreshold}
       />
-      <Results stationData={stationData} tideTarget={tideTarget} />
+      <Results stationData={stationData} tideTarget={tideTarget} tideThreshold={tideThreshold}/>
     </div>
   );
 }

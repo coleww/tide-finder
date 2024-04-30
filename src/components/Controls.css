@@ -1,0 +1,28 @@
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.controls-box {
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.control-input {
+  width: 120px;
+  padding: 2px;
+  margin: 6px;
+  border-width: 0px;
+}
+
+.control-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.download-wrapper {
+  margin: 6px;
+}
