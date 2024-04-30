@@ -8,7 +8,7 @@ export function filterTides(tideTarget: number, threshold: number, stationData: 
   // TODO: memoize this to improve perf when changing tide target
   const tidesByDate = tideData.reduce<{ [key: string]: TidePrediction[] }>(
     (acc, tidePrediction) => {
-      const date = formatDateTZ(tidePrediction.t, timezone);
+      const date = formatDateTZ(tidePrediction.time, timezone);
       acc[date] = acc[date] || [];
       acc[date].push(tidePrediction);
       return acc;
@@ -23,11 +23,10 @@ export function filterTides(tideTarget: number, threshold: number, stationData: 
     const sunsetTarget = new Date(solarDay.sunset.getTime() + threshold * 60000);
 
     const hasDaytimeLowtide = tides?.some(tidePrediction => {
-      const { t, v } = tidePrediction;
-      const tideDate = new Date(t);
+      const { time, tide } = tidePrediction;
 
-      const isLowTide = v < tideTarget;
-      const isDayTime = tideDate >= sunriseTarget && tideDate <= sunsetTarget;
+      const isLowTide = tide < tideTarget;
+      const isDayTime = time >= sunriseTarget && time <= sunsetTarget;
       return isLowTide && isDayTime;
     });
 

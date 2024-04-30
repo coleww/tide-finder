@@ -9,19 +9,19 @@ const mockStationData = {
   timezone: 'America/Los_Angeles',
   tideData: [
 
-    { t: new Date('2024-04-27T13:11:01.000Z'), v: -0.1 }, // night time low tide, 4 minutes before sunrise
-    { t: new Date('2024-04-27T11:35:00.000Z'), v: 3.499 },
-    { t: new Date('2024-04-27T17:22:00.000Z'), v: 6.177 },
+    { time: new Date('2024-04-27T13:11:01.000Z'), tide: -0.1 }, // night time low tide, 4 minutes before sunrise
+    { time: new Date('2024-04-27T11:35:00.000Z'), tide: 3.499 },
+    { time: new Date('2024-04-27T17:22:00.000Z'), tide: 6.177 },
 
-    { t: new Date('2024-04-29T07:27:00.000Z'), v: 4.692 },
-    { t: new Date('2024-04-29T11:35:00.000Z'), v: 3.499 },
-    { t: new Date('2024-04-29T17:22:00.000Z'), v: 6.177 },
-    { t: new Date('2024-04-30T00:46:00.000Z'), v: -0.449 }, // day time low tide
+    { time: new Date('2024-04-29T07:27:00.000Z'), tide: 4.692 },
+    { time: new Date('2024-04-29T11:35:00.000Z'), tide: 3.499 },
+    { time: new Date('2024-04-29T17:22:00.000Z'), tide: 6.177 },
+    { time: new Date('2024-04-30T00:46:00.000Z'), tide: -0.449 }, // day time low tide
 
-    { t: new Date('2024-04-30T07:27:00.000Z'), v: 4.692 },
-    { t: new Date('2024-04-30T11:35:00.000Z'), v: 3.499 },
-    { t: new Date('2024-04-30T17:22:00.000Z'), v: 6.177 },
-    { t: new Date('2024-04-31T03:59:00.000Z'), v: -0.449 }, // night time low tide, 1 minute after sunset
+    { time: new Date('2024-04-30T07:27:00.000Z'), tide: 4.692 },
+    { time: new Date('2024-04-30T11:35:00.000Z'), tide: 3.499 },
+    { time: new Date('2024-04-30T17:22:00.000Z'), tide: 6.177 },
+    { time: new Date('2024-04-31T03:59:00.000Z'), tide: -0.449 }, // night time low tide, 1 minute after sunset
   ],
   solarData: [
     {
@@ -47,10 +47,10 @@ test('finds matching day time lowtides below target', () => {
       sunrise: new Date('2024-04-29T13:15:01.000Z'),
       sunset: new Date('2024-04-30T02:58:27.000Z'),
       tides: [
-        { t: new Date('2024-04-29T07:27:00.000Z'), v: 4.692 },
-        { t: new Date('2024-04-29T11:35:00.000Z'), v: 3.499 },
-        { t: new Date('2024-04-29T17:22:00.000Z'), v: 6.177 },
-        { t: new Date('2024-04-30T00:46:00.000Z'), v: -0.449 },
+        { time: new Date('2024-04-29T07:27:00.000Z'), tide: 4.692 },
+        { time: new Date('2024-04-29T11:35:00.000Z'), tide: 3.499 },
+        { time: new Date('2024-04-29T17:22:00.000Z'), tide: 6.177 },
+        { time: new Date('2024-04-30T00:46:00.000Z'), tide: -0.449 },
       ],
     },
   ]);
@@ -63,19 +63,19 @@ test('finds matching day time lowtides within threshold', () => {
       sunrise: new Date('2024-04-27T13:15:01.000Z'),
       sunset: new Date('2024-04-28T02:58:27.000Z'),
       tides: [
-        { t: new Date('2024-04-27T13:11:01.000Z'), v: -0.1 },
-        { t: new Date('2024-04-27T11:35:00.000Z'), v: 3.499 },
-        { t: new Date('2024-04-27T17:22:00.000Z'), v: 6.177 },
+        { time: new Date('2024-04-27T13:11:01.000Z'), tide: -0.1 },
+        { time: new Date('2024-04-27T11:35:00.000Z'), tide: 3.499 },
+        { time: new Date('2024-04-27T17:22:00.000Z'), tide: 6.177 },
       ],
     },
     {
       sunrise: new Date('2024-04-29T13:15:01.000Z'),
       sunset: new Date('2024-04-30T02:58:27.000Z'),
       tides: [
-        { t: new Date('2024-04-29T07:27:00.000Z'), v: 4.692 },
-        { t: new Date('2024-04-29T11:35:00.000Z'), v: 3.499 },
-        { t: new Date('2024-04-29T17:22:00.000Z'), v: 6.177 },
-        { t: new Date('2024-04-30T00:46:00.000Z'), v: -0.449 }, // day time low tide
+        { time: new Date('2024-04-29T07:27:00.000Z'), tide: 4.692 },
+        { time: new Date('2024-04-29T11:35:00.000Z'), tide: 3.499 },
+        { time: new Date('2024-04-29T17:22:00.000Z'), tide: 6.177 },
+        { time: new Date('2024-04-30T00:46:00.000Z'), tide: -0.449 }, // day time low tide
       ],
     },
     {
@@ -83,10 +83,10 @@ test('finds matching day time lowtides within threshold', () => {
       sunrise: new Date('2024-04-30T14:15:01.000Z'),
       sunset: new Date('2024-04-31T03:58:27.000Z'),
       tides: [
-        { t: new Date('2024-04-30T07:27:00.000Z'), v: 4.692 },
-        { t: new Date('2024-04-30T11:35:00.000Z'), v: 3.499 },
-        { t: new Date('2024-04-30T17:22:00.000Z'), v: 6.177 },
-        { t: new Date('2024-04-31T03:59:00.000Z'), v: -0.449 }, // night time low tide, 1 minute after sunset
+        { time: new Date('2024-04-30T07:27:00.000Z'), tide: 4.692 },
+        { time: new Date('2024-04-30T11:35:00.000Z'), tide: 3.499 },
+        { time: new Date('2024-04-30T17:22:00.000Z'), tide: 6.177 },
+        { time: new Date('2024-04-31T03:59:00.000Z'), tide: -0.449 }, // night time low tide, 1 minute after sunset
       ]
     }
   ]);

@@ -5,8 +5,8 @@ export type TidePredictionRes = {
 };
 
 export type TidePrediction = {
-  t: Date;
-  v: number;
+  time: Date;
+  tide: number;
 };
 
 export type Metadata = {
