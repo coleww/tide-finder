@@ -4,7 +4,7 @@ import { type StationData } from '../utils/api';
 import Controls from './Controls';
 import Results from './Results';
 
-const STATION_QP = 'station_id'
+const STATION_QP = 'station_id';
 
 function updateQueryParam(stationId: string) {
   const url = new URL(window.location.href);
@@ -25,15 +25,20 @@ function DaytimeLowtideFinder() {
   useEffect(() => {
     if (stationId) {
       updateQueryParam(stationId);
-      getStationData(stationId).then((data) => {
+      getStationData(stationId).then(data => {
         setStationData(data);
-      })
+      });
     }
   }, [stationId]);
 
   return (
     <div>
-      <Controls setStationId={setStationId} setTideTarget={setTideTarget} stationId={stationId} tideTarget={tideTarget} />
+      <Controls
+        setStationId={setStationId}
+        setTideTarget={setTideTarget}
+        stationId={stationId}
+        tideTarget={tideTarget}
+      />
       <Results stationData={stationData} tideTarget={tideTarget} />
     </div>
   );
