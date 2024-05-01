@@ -47,7 +47,6 @@ function DaytimeLowtideFinder() {
 
   const selectDate = useCallback(
     (selectedDate: DaytimeLowtideData) => {
-      console.log('selecting', selectedDates, selectedDate);
       setSelectedDates([...selectedDates, selectedDate]);
     },
     [selectedDates]
@@ -58,10 +57,6 @@ function DaytimeLowtideFinder() {
       const i = selectedDates.findIndex(
         date => date.sunrise === selectedDate.sunrise
       );
-      console.log('unselecting', selectedDate, i, [
-        ...selectedDates.slice(0, i),
-        ...selectedDates.slice(i + 1, selectedDates.length),
-      ]);
       setSelectedDates([
         ...selectedDates.slice(0, i),
         ...selectedDates.slice(i + 1, selectedDates.length),

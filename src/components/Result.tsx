@@ -29,20 +29,19 @@ function Result({
   }, [selectedDates, sunrise]);
 
   const toggleCheckbox = useCallback(() => {
-    // console.log(isSelected)
     isSelected ? unselectDate(lowtideData) : selectDate(lowtideData);
   }, [isSelected, lowtideData, selectDate, unselectDate]);
 
   const rows = useMemo(() => {
     const eventMap: { [key: string]: ReactNode } = {};
     eventMap[sunrise.getTime()] = (
-      <tr>
+      <tr key={sunrise.getTime()}>
         <td className="sunrise">sunrise</td>
         <td>{formatTimeTZ(sunrise, timezone)}</td>
       </tr>
     );
     eventMap[sunset.getTime()] = (
-      <tr>
+      <tr key={sunset.getTime()}>
         <td className="sunset">sunset</td>
         <td>{formatTimeTZ(sunset, timezone)}</td>
       </tr>
@@ -50,7 +49,7 @@ function Result({
     tides.forEach(tide => {
       const isLow = tide.tide < tideTarget;
       eventMap[tide.time.getTime()] = (
-        <tr>
+        <tr key={tide.time.getTime()}>
           <td className={isLow ? 'low-tide-result' : ''}>{tide.tide}ft</td>
           <td>{formatTimeTZ(tide.time, timezone)}</td>
         </tr>
@@ -65,9 +64,12 @@ function Result({
   return (
     <div className="result" onClick={toggleCheckbox}>
       <div className="date">
-        {date} <input type="checkbox" checked={isSelected} />
+        {date}{' '}
+        <input type="checkbox" checked={isSelected} onChange={toggleCheckbox} />
       </div>
-      <table className="result-table">{rows}</table>
+      <table className="result-table">
+        <tbody>{rows}</tbody>
+      </table>
     </div>
   );
 }

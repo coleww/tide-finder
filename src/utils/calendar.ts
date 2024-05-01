@@ -45,7 +45,6 @@ export async function handleDownload(
       if (error) {
         reject(error);
       }
-      console.log(value);
       resolve(new File([value], filename, { type: 'text/calendar' }));
     });
   }).catch(e => {

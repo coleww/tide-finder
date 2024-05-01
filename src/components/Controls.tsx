@@ -96,7 +96,6 @@ function Controls({
           />
         </label>
       </div>
-      {/* TODO: https://www.npmjs.com/package/ics create calendar download. select low tides to save. */}
     </div>
   );
 }
