@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getStationData } from '../utils/api';
 import { type DaytimeLowtideData, type StationData } from '../utils/types';
 import Controls from './Controls';
@@ -32,6 +32,10 @@ function DaytimeLowtideFinder() {
     setDaytimeLowtideDates(data);
     setSelectedDates([]);
   }, []);
+
+  const allDatesAreSelected = useMemo(() => {
+    return daytimeLowtideDates.length === selectedDates.length;
+  }, [daytimeLowtideDates.length, selectedDates.length]);
 
   const selectAllDates = () => {
     setSelectedDates(daytimeLowtideDates);
@@ -86,6 +90,7 @@ function DaytimeLowtideFinder() {
   return (
     <div>
       <Controls
+        allDatesAreSelected={allDatesAreSelected}
         downloadCalendar={downloadCalendar}
         deselectAllDates={deselectAllDates}
         selectAllDates={selectAllDates}

@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import './Controls.css';
 
 type ControlsProps = {
   stationId: string;
   tideTarget: number;
   tideThreshold: number;
+  allDatesAreSelected: boolean;
   deselectAllDates: () => void;
   downloadCalendar: () => void;
   selectAllDates: () => void;
@@ -15,6 +15,7 @@ type ControlsProps = {
 
 function Controls({
   stationId,
+  allDatesAreSelected,
   downloadCalendar,
   deselectAllDates,
   selectAllDates,
@@ -24,15 +25,11 @@ function Controls({
   tideThreshold,
   setTideThreshold,
 }: ControlsProps) {
-  const [isAllSelected, setIsAllSelected] = useState(false);
-
   const toggleSelectAll = () => {
-    if (isAllSelected) {
+    if (allDatesAreSelected) {
       deselectAllDates();
-      setIsAllSelected(false);
     } else {
       selectAllDates();
-      setIsAllSelected(true);
     }
   };
 
@@ -94,7 +91,7 @@ function Controls({
           Select All{' '}
           <input
             type="checkbox"
-            checked={isAllSelected}
+            checked={allDatesAreSelected}
             onChange={toggleSelectAll}
           />
         </label>
