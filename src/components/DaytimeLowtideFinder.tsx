@@ -4,18 +4,10 @@ import { type DaytimeLowtideData, type StationData } from '../utils/types';
 import Controls from './Controls';
 import Results from './Results';
 import { handleDownload } from '../utils/calendar';
+import { filterTides } from '../utils/filterTides';
+import { getQueryParam, updateQueryParam } from '../utils/query';
 
-const STATION_QP = 'station_id';
 
-function updateQueryParam(stationId: string) {
-  const url = new URL(window.location.href);
-  url.searchParams.set(STATION_QP, stationId);
-  window.history.pushState(null, '', url.toString());
-}
-
-function getQueryParam() {
-  return new URLSearchParams(document.location.search).get(STATION_QP) || '';
-}
 
 function DaytimeLowtideFinder() {
   const [stationId, setStationId] = useState(getQueryParam());
@@ -28,22 +20,17 @@ function DaytimeLowtideFinder() {
   >([]);
   const [selectedDates, setSelectedDates] = useState<DaytimeLowtideData[]>([]);
 
-  const updateDaytimeLowtides = useCallback((data: DaytimeLowtideData[]) => {
-    setDaytimeLowtideDates(data);
-    setSelectedDates([]);
-  }, []);
-
   const allDatesAreSelected = useMemo(() => {
     return daytimeLowtideDates.length === selectedDates.length;
   }, [daytimeLowtideDates.length, selectedDates.length]);
 
-  const selectAllDates = () => {
+  const selectAllDates = useCallback(() => {
     setSelectedDates(daytimeLowtideDates);
-  };
+  }, [daytimeLowtideDates]);
 
-  const deselectAllDates = () => {
+  const deselectAllDates = useCallback(() => {
     setSelectedDates([]);
-  };
+  }, []);
 
   const selectDate = useCallback(
     (selectedDate: DaytimeLowtideData) => {
@@ -82,6 +69,15 @@ function DaytimeLowtideFinder() {
     }
   }, [stationId]);
 
+    useEffect(() => {
+      if (stationData) {
+        setDaytimeLowtideDates(
+          filterTides(tideTarget, tideThreshold, stationData)
+        );
+        setSelectedDates([]);
+      }
+    }, [setDaytimeLowtideDates, stationData, tideTarget, tideThreshold]);
+
   return (
     <div>
       <Controls
@@ -100,11 +96,9 @@ function DaytimeLowtideFinder() {
         daytimeLowtideDates={daytimeLowtideDates}
         selectDate={selectDate}
         selectedDates={selectedDates}
-        setDaytimeLowtideDates={updateDaytimeLowtides}
         unselectDate={unselectDate}
         stationData={stationData}
         tideTarget={tideTarget}
-        tideThreshold={tideThreshold}
       />
     </div>
   );
