@@ -33,7 +33,7 @@ export function filterTides(
       solarDay.sunset.getTime() + threshold * 60000
     );
 
-    const hasDaytimeLowtide = tides?.some(tidePrediction => {
+    const daytimeLowtide = tides?.find(tidePrediction => {
       const { time, tide } = tidePrediction;
 
       const isLowTide = tide < tideTarget;
@@ -41,11 +41,12 @@ export function filterTides(
       return isLowTide && isDayTime;
     });
 
-    if (hasDaytimeLowtide) {
+    if (daytimeLowtide) {
       acc.push({
         sunrise: solarDay.sunrise,
         sunset: solarDay.sunset,
         tides,
+        lowtide: daytimeLowtide,
       });
     }
     return acc;

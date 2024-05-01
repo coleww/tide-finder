@@ -31,4 +31,5 @@ export type DaytimeLowtideData = {
   sunrise: Date;
   sunset: Date;
   tides: TidePrediction[];
+  lowtide: TidePrediction;
 };

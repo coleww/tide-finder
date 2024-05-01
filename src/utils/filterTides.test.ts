@@ -42,6 +42,10 @@ test('finds matching day time lowtides below target', () => {
   const filteredTides = filterTides(0, 0, mockStationData);
   expect(filteredTides).toStrictEqual([
     {
+      lowtide: {
+        tide: -0.449,
+        time: new Date('2024-04-30T00:46:00.000Z'),
+      },
       sunrise: new Date('2024-04-29T13:15:01.000Z'),
       sunset: new Date('2024-04-30T02:58:27.000Z'),
       tides: [
@@ -58,6 +62,10 @@ test('finds matching day time lowtides within threshold', () => {
   const filteredTides = filterTides(0, 5, mockStationData);
   expect(filteredTides).toStrictEqual([
     {
+      lowtide: {
+        tide: -0.1,
+        time: new Date('2024-04-27T13:11:01.000Z'),
+      },
       sunrise: new Date('2024-04-27T13:15:01.000Z'),
       sunset: new Date('2024-04-28T02:58:27.000Z'),
       tides: [
@@ -67,6 +75,10 @@ test('finds matching day time lowtides within threshold', () => {
       ],
     },
     {
+      lowtide: {
+        tide: -0.449,
+        time: new Date('2024-04-30T00:46:00.000Z'),
+      },
       sunrise: new Date('2024-04-29T13:15:01.000Z'),
       sunset: new Date('2024-04-30T02:58:27.000Z'),
       tides: [
@@ -77,6 +89,10 @@ test('finds matching day time lowtides within threshold', () => {
       ],
     },
     {
+      lowtide: {
+        tide: -0.449,
+        time: new Date('2024-05-01T03:59:00.000Z'),
+      },
       sunrise: new Date('2024-04-30T14:15:01.000Z'),
       sunset: new Date('2024-04-31T03:58:27.000Z'),
       tides: [

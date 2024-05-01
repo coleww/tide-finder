@@ -6,6 +6,7 @@ type ControlsProps = {
   tideTarget: number;
   tideThreshold: number;
   deselectAllDates: () => void;
+  downloadCalendar: () => void;
   selectAllDates: () => void;
   setStationId: (id: string) => void;
   setTideTarget: (target: number) => void;
@@ -14,6 +15,7 @@ type ControlsProps = {
 
 function Controls({
   stationId,
+  downloadCalendar,
   deselectAllDates,
   selectAllDates,
   setStationId,
@@ -87,7 +89,7 @@ function Controls({
       </div>
 
       <div className="download-wrapper">
-        <button>download calendar</button>{' '}
+        <button onClick={downloadCalendar}>Download Calendar</button>{' '}
         <label>
           Select All{' '}
           <input
