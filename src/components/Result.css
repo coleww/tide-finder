@@ -2,10 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid lightslategrey;
+  border: 2px solid black;
   border-radius: 12px;
   padding: 12px;
   cursor: pointer;
+}
+
+.result.selected {
+  border: 2px solid blue;
 }
 
 .date {
@@ -13,10 +17,15 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  border-bottom: 2px solid transparent;
+}
+
+.selected .date {
+  border-bottom: 2px solid blue;
 }
 
 .result-table {
-  width: 200px;
+  width: 180px;
 }
 
 .low-tide-result {

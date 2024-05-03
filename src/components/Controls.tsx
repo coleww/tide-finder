@@ -44,7 +44,7 @@ function Controls({
             value={stationId}
             onChange={e => setStationId(e.target.value)}
           />
-          <label htmlFor="station-id">NOAA Station ID</label>
+          <label htmlFor="station-id">NOAA Station ID (<a href="https://tidesandcurrents.noaa.gov/map/index.shtml">look up here</a>)</label>
         </div>
 
         <div className="control-wrapper">
@@ -59,7 +59,7 @@ function Controls({
             value={tideTarget}
             onChange={e => setTideTarget(Number(e.target.value))}
           />
-          <label htmlFor="tide-target">Target: {tideTarget} feet</label>
+          <label htmlFor="tide-target">{tideTarget} feet or lower</label>
 
           <datalist id="tide-markers">
             <option value="0"></option>
@@ -80,7 +80,7 @@ function Controls({
             onChange={e => setTideThreshold(Number(e.target.value))}
           />
           <label htmlFor="tide-threshold">
-            Threshold: {tideThreshold} minutes
+            Within {tideThreshold} minutes of sunrise/sunset
           </label>
         </div>
       </div>

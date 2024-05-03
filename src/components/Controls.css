@@ -5,8 +5,8 @@
 }
 
 .controls-box {
-  border: 1px solid black;
-  border-radius: 6px;
+  border: 2px solid black;
+  border-radius: 12px;
   padding: 6px;
 }
 
@@ -14,9 +14,8 @@
   width: 120px;
   padding: 2px;
   margin: 6px;
-  border-width: 0px;
-  border-bottom: 1px solid darkslategrey;
-  background-color: lightsteelblue;
+  border: 1px solid black;
+  border-radius: 2px;
 }
 
 .control-wrapper {

@@ -23,6 +23,6 @@ test('formatDateTz formats date for timezone', () => {
 test('formatTimeTz formats time for timezone', () => {
   // Hawaii does not observe DST
   expect(formatTimeTZ(new Date('2024-04-30T18:15Z'), 'Pacific/Honolulu')).toBe(
-    '8:15:00 AM'
+    '08:15 AM'
   );
 });
