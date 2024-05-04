@@ -11,7 +11,7 @@ function App() {
         <DaytimeLowtideFinder />
       </main>
       <footer className='footer'>
-        made by <a href="http://github.com/coleww">Cole Willsea</a>
+        made by <a href="http://github.com/coleww" target="_blank" rel="noreferrer">Cole Willsea</a>
       </footer>
     </div>
   );
