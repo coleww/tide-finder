@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/daytime-lowtide-finder/static/css/main.e3798874.css",
+    "main.js": "/daytime-lowtide-finder/static/js/main.398d61dd.js",
+    "static/js/97.4efa0057.chunk.js": "/daytime-lowtide-finder/static/js/97.4efa0057.chunk.js",
+    "index.html": "/daytime-lowtide-finder/index.html",
+    "main.e3798874.css.map": "/daytime-lowtide-finder/static/css/main.e3798874.css.map",
+    "main.398d61dd.js.map": "/daytime-lowtide-finder/static/js/main.398d61dd.js.map",
+    "97.4efa0057.chunk.js.map": "/daytime-lowtide-finder/static/js/97.4efa0057.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e3798874.css",
+    "static/js/main.398d61dd.js"
+  ]
+}
