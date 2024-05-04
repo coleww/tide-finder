@@ -44,7 +44,7 @@ function Controls({
             value={stationId}
             onChange={e => setStationId(e.target.value)}
           />
-          <label htmlFor="station-id">NOAA Station ID (<a href="https://tidesandcurrents.noaa.gov/map/index.shtml" target="_blank" rel="noreferrer">look up here</a>)</label>
+          <label htmlFor="station-id">NOAA Station ID (<a href="https://tidesandcurrents.noaa.gov/map/index.html?type=TidePredictions&region=#" target="_blank" rel="noreferrer">look up here</a>)</label>
         </div>
 
         <div className="control-wrapper">
