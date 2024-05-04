@@ -62,7 +62,10 @@ function Result({
   }, [sunrise, sunset, tideTarget, tides, timezone]);
 
   return (
-    <div className={`result ${isSelected ? 'selected' : ''}`} onClick={toggleCheckbox}>
+    <div
+      className={`result ${isSelected ? 'selected' : ''}`}
+      onClick={toggleCheckbox}
+    >
       <div className="date">
         {date}{' '}
         <input type="checkbox" checked={isSelected} onChange={toggleCheckbox} />

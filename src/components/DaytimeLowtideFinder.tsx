@@ -7,8 +7,6 @@ import { handleDownload } from '../utils/calendar';
 import { filterTides } from '../utils/filterTides';
 import { getQueryParam, updateQueryParam } from '../utils/query';
 
-
-
 function DaytimeLowtideFinder() {
   const [stationId, setStationId] = useState(getQueryParam());
   const [tideTarget, setTideTarget] = useState(0);
@@ -69,14 +67,14 @@ function DaytimeLowtideFinder() {
     }
   }, [stationId]);
 
-    useEffect(() => {
-      if (stationData) {
-        setDaytimeLowtideDates(
-          filterTides(tideTarget, tideThreshold, stationData)
-        );
-        setSelectedDates([]);
-      }
-    }, [setDaytimeLowtideDates, stationData, tideTarget, tideThreshold]);
+  useEffect(() => {
+    if (stationData) {
+      setDaytimeLowtideDates(
+        filterTides(tideTarget, tideThreshold, stationData)
+      );
+      setSelectedDates([]);
+    }
+  }, [setDaytimeLowtideDates, stationData, tideTarget, tideThreshold]);
 
   return (
     <div>

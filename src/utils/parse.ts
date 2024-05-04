@@ -12,7 +12,11 @@ export function formatDateTZ(date: Date, tz: string) {
 }
 
 export function formatTimeTZ(date: Date, tz: string) {
-  return date.toLocaleTimeString('en-US', { timeZone: tz, hour: "2-digit", minute: "2-digit" });
+  return date.toLocaleTimeString('en-US', {
+    timeZone: tz,
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 }
 
 export function parseTideTimestamp(timestamp: string) {

@@ -20,7 +20,7 @@ function Results({
   selectDate,
   selectedDates,
 }: ResultsProps) {
-  if (!stationData) return <div className='loading'>Loading . . .</div>;
+  if (!stationData) return <div className="loading">Loading . . .</div>;
   const { metadata, timezone } = stationData;
   const { title, lat, lng } = metadata;
 
