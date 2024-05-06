@@ -33,3 +33,5 @@ export type LowtideEventData = {
   tides: TidePrediction[];
   lowtide: TidePrediction;
 };
+
+export { type Mode, modes as modesEnum } from './hooks/useMode';

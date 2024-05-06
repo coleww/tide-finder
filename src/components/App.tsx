@@ -5,12 +5,13 @@ import Controls from './Controls';
 import Results from './Results';
 import { handleDownload } from '../utils/calendar';
 import { filterDaytimeTides } from '../utils/filterTides';
-import { getQueryParam, updateQueryParam } from '../utils/query';
+import { STATION_QP, getQueryParam, updateQueryParam } from '../utils/query';
 
 import './App.css';
+import { useMode } from '../hooks/useMode';
 
 function App() {
-  const [stationId, setStationId] = useState(getQueryParam());
+  const [stationId, setStationId] = useState(getQueryParam(STATION_QP));
   const [tideTarget, setTideTarget] = useState(0);
   const [tideThreshold, setTideThreshold] = useState(0);
   const [stationData, setStationData] = useState<StationData>();
@@ -57,10 +58,12 @@ function App() {
     }
   }, [selectedDates, stationData, stationId]);
 
+  const { title, toggleMode } = useMode();
+
   useEffect(() => {
     // TODO: are all NOAA tide stations 7 chars?
     if (stationId.length === 7) {
-      updateQueryParam(stationId);
+      updateQueryParam(STATION_QP, stationId);
       getStationData(stationId).then(data => {
         setStationData(data);
       });
@@ -79,7 +82,8 @@ function App() {
   return (
     <div>
       <header className="header">
-        <h1>Tide Finder</h1>
+        <h1>{title}</h1>
+        <button onClick={toggleMode}>Toggle Mode</button>
       </header>
       <main>
         <Controls
