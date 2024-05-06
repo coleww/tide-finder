@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getStationData } from '../utils/api';
-import { type StationData, modesEnum, type LowtideEventData } from '../types';
+import { type StationData, modesEnum } from '../types';
 import Controls from './Controls';
 import Results from './Results';
 import { handleDownload } from '../utils/calendar';
 import { filterDaytimeTides, filterFullmoonTides } from '../utils/filterTides';
 import { STATION_QP, getQueryParam, updateQueryParam } from '../utils/query';
 import { useMode } from '../hooks/useMode';
+import { useSelected } from '../hooks/useSelected';
 
 import './App.css';
 
@@ -16,40 +17,17 @@ function App() {
   const [tideThreshold, setTideThreshold] = useState(0);
   const [lunarThreshold, setLunarThreshold] = useState(0.99);
   const [stationData, setStationData] = useState<StationData>();
-  const [lowtideEvents, setLowtideEvents] = useState<LowtideEventData[]>([]);
-  const [selectedDates, setSelectedDates] = useState<LowtideEventData[]>([]);
 
-  const allDatesAreSelected = useMemo(() => {
-    return lowtideEvents.length === selectedDates.length;
-  }, [lowtideEvents.length, selectedDates.length]);
-
-  const selectAllDates = useCallback(() => {
-    setSelectedDates(lowtideEvents);
-  }, [lowtideEvents]);
-
-  const deselectAllDates = useCallback(() => {
-    setSelectedDates([]);
-  }, []);
-
-  const selectDate = useCallback(
-    (selectedDate: LowtideEventData) => {
-      setSelectedDates([...selectedDates, selectedDate]);
-    },
-    [selectedDates]
-  );
-
-  const unselectDate = useCallback(
-    (selectedDate: LowtideEventData) => {
-      const i = selectedDates.findIndex(
-        date => date.solarData.sunrise === selectedDate.solarData.sunrise
-      );
-      setSelectedDates([
-        ...selectedDates.slice(0, i),
-        ...selectedDates.slice(i + 1, selectedDates.length),
-      ]);
-    },
-    [selectedDates]
-  );
+  const {
+    lowtideEvents,
+    setLowtideEvents,
+    selectedDates,
+    allDatesAreSelected,
+    selectAllDates,
+    deselectAllDates,
+    selectDate,
+    unselectDate,
+  } = useSelected();
 
   const downloadCalendar = useCallback(() => {
     if (stationData && selectedDates.length) {
