@@ -1,4 +1,4 @@
-import { type Metadata, TidePrediction, TidePredictionRes } from './types';
+import { type Metadata, TidePrediction, TidePredictionRes } from '../types';
 
 export function formatDateNOAA(date: Date) {
   const dd = String(date.getDate()).padStart(2, '0');

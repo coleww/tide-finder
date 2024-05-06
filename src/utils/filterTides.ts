@@ -2,7 +2,7 @@ import {
   type StationData,
   type TidePrediction,
   type DaytimeLowtideData,
-} from './types';
+} from '../types';
 import { formatDateTZ } from './parse';
 
 export function filterTides(

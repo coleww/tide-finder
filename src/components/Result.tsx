@@ -1,4 +1,4 @@
-import { type DaytimeLowtideData } from '../utils/types';
+import { type DaytimeLowtideData } from '../types';
 import { formatDateTZ, formatTimeTZ } from '../utils/parse';
 import './Result.css';
 import { useMemo, type ReactNode, useCallback } from 'react';

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getStationData } from '../utils/api';
-import { type DaytimeLowtideData, type StationData } from '../utils/types';
+import { type DaytimeLowtideData, type StationData } from '../types';
 import Controls from './Controls';
 import Results from './Results';
 import { handleDownload } from '../utils/calendar';

@@ -1,6 +1,6 @@
 import { solarCalc } from './solarCalc';
 import { parseTideData, parseMetadata, formatDateNOAA } from './parse';
-import { type SolarData, type StationData } from './types';
+import { type SolarData, type StationData } from '../types';
 
 function getSolarData(
   lat: number,

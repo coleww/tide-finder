@@ -1,4 +1,4 @@
-import { type StationData, type DaytimeLowtideData } from '../utils/types';
+import { type StationData, type DaytimeLowtideData } from '../types';
 import './Results.css';
 import Result from './Result';
 import { formatDateTZ } from '../utils/parse';

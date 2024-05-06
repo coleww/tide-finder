@@ -1,5 +1,5 @@
 import { createEvents } from 'ics';
-import { type Metadata, type DaytimeLowtideData } from './types';
+import { type Metadata, type DaytimeLowtideData } from '../types';
 import { formatTimeTZ } from './parse';
 
 function createTideEvent(
