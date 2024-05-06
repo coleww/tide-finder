@@ -27,7 +27,7 @@ export type StationData = {
   timezone: string;
 };
 
-export type DaytimeLowtideData = {
+export type LowtideEventData = {
   sunrise: Date;
   sunset: Date;
   tides: TidePrediction[];

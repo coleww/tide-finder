@@ -1,9 +1,9 @@
 import { createEvents } from 'ics';
-import { type Metadata, type DaytimeLowtideData } from '../types';
+import { type Metadata, type LowtideEventData } from '../types';
 import { formatTimeTZ } from './parse';
 
 function createTideEvent(
-  lowtideData: DaytimeLowtideData,
+  lowtideData: LowtideEventData,
   metadata: Metadata,
   timezone: string,
   stationId: string
@@ -24,14 +24,14 @@ function createTideEvent(
     title: `${lowtide.tide}ft ${title}`,
     description,
     location: title,
-    url: `https://colewillsea.net/daytime-lowtide-finder/?station_id=${stationId}`,
+    url: `https://colewillsea.net/tide-finder/?station_id=${stationId}`,
     geo: { lat: lat, lon: lng },
     categories: ['low tide'],
   };
 }
 
 export async function handleDownload(
-  lowtideData: DaytimeLowtideData[],
+  lowtideData: LowtideEventData[],
   metadata: Metadata,
   timezone: string,
   stationId: string

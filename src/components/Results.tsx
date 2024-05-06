@@ -1,4 +1,4 @@
-import { type StationData, type DaytimeLowtideData } from '../types';
+import { type StationData, type LowtideEventData } from '../types';
 import './Results.css';
 import Result from './Result';
 import { formatDateTZ } from '../utils/parse';
@@ -6,14 +6,14 @@ import { formatDateTZ } from '../utils/parse';
 type ResultsProps = {
   tideTarget: number;
   stationData?: StationData;
-  daytimeLowtideDates: DaytimeLowtideData[];
-  selectDate: (date: DaytimeLowtideData) => void;
-  unselectDate: (date: DaytimeLowtideData) => void;
-  selectedDates: DaytimeLowtideData[];
+  lowtideEvents: LowtideEventData[];
+  selectDate: (date: LowtideEventData) => void;
+  unselectDate: (date: LowtideEventData) => void;
+  selectedDates: LowtideEventData[];
 };
 
 function Results({
-  daytimeLowtideDates,
+  lowtideEvents,
   stationData,
   tideTarget,
   unselectDate,
@@ -30,15 +30,15 @@ function Results({
         <div>
           {title} - {lat},{lng}
         </div>
-        <div>{daytimeLowtideDates.length} results</div>
+        <div>{lowtideEvents.length} results</div>
       </div>
 
       <div className="results-container">
-        {daytimeLowtideDates.map(dtlt => {
+        {lowtideEvents.map(le => {
           return (
             <Result
-              key={formatDateTZ(dtlt.sunrise, timezone)}
-              lowtideData={dtlt}
+              key={formatDateTZ(le.sunrise, timezone)}
+              lowtideData={le}
               timezone={timezone}
               tideTarget={tideTarget}
               selectDate={selectDate}

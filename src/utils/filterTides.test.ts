@@ -1,4 +1,4 @@
-import { filterTides } from './filterTides';
+import { filterDaytimeTides } from './filterTides';
 
 const mockStationData = {
   metadata: {
@@ -38,8 +38,8 @@ const mockStationData = {
   ],
 };
 
-test('finds matching day time lowtides below target', () => {
-  const filteredTides = filterTides(0, 0, mockStationData);
+test('filterDaytimeTides: finds matching day time lowtides below target', () => {
+  const filteredTides = filterDaytimeTides(0, 0, mockStationData);
   expect(filteredTides).toStrictEqual([
     {
       lowtide: {
@@ -58,8 +58,8 @@ test('finds matching day time lowtides below target', () => {
   ]);
 });
 
-test('finds matching day time lowtides within threshold', () => {
-  const filteredTides = filterTides(0, 5, mockStationData);
+test('filterDaytimeTides: finds matching day time lowtides within threshold', () => {
+  const filteredTides = filterDaytimeTides(0, 5, mockStationData);
   expect(filteredTides).toStrictEqual([
     {
       lowtide: {
@@ -105,8 +105,8 @@ test('finds matching day time lowtides within threshold', () => {
   ]);
 });
 
-test('filters out night time low tides below target', () => {
-  const filteredTides = filterTides(0, 0, {
+test('filterDaytimeTides: filters out night time low tides below target', () => {
+  const filteredTides = filterDaytimeTides(0, 0, {
     ...mockStationData,
     solarData: [
       {
@@ -118,7 +118,7 @@ test('filters out night time low tides below target', () => {
   expect(filteredTides).toStrictEqual([]);
 });
 
-test('filters out day time lowtides below target', () => {
-  const filteredTides = filterTides(-0.5, 0, mockStationData);
+test('filterDaytimeTides: filters out day time lowtides below target', () => {
+  const filteredTides = filterDaytimeTides(-0.5, 0, mockStationData);
   expect(filteredTides).toStrictEqual([]);
 });

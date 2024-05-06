@@ -1,15 +1,15 @@
-import { type DaytimeLowtideData } from '../types';
+import { type LowtideEventData } from '../types';
 import { formatDateTZ, formatTimeTZ } from '../utils/parse';
 import './Result.css';
 import { useMemo, type ReactNode, useCallback } from 'react';
 
 type ResultProps = {
-  lowtideData: DaytimeLowtideData;
+  lowtideData: LowtideEventData;
   timezone: string;
   tideTarget: number;
-  selectDate: (date: DaytimeLowtideData) => void;
-  unselectDate: (date: DaytimeLowtideData) => void;
-  selectedDates: DaytimeLowtideData[];
+  selectDate: (date: LowtideEventData) => void;
+  unselectDate: (date: LowtideEventData) => void;
+  selectedDates: LowtideEventData[];
 };
 
 function Result({

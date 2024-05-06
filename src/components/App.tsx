@@ -1,45 +1,44 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getStationData } from '../utils/api';
-import { type DaytimeLowtideData, type StationData } from '../types';
+import { type LowtideEventData, type StationData } from '../types';
 import Controls from './Controls';
 import Results from './Results';
 import { handleDownload } from '../utils/calendar';
-import { filterTides } from '../utils/filterTides';
+import { filterDaytimeTides } from '../utils/filterTides';
 import { getQueryParam, updateQueryParam } from '../utils/query';
 
 import './App.css';
 
-function DaytimeLowtideFinder() {
+function App() {
   const [stationId, setStationId] = useState(getQueryParam());
   const [tideTarget, setTideTarget] = useState(0);
   const [tideThreshold, setTideThreshold] = useState(0);
   const [stationData, setStationData] = useState<StationData>();
 
-  const [daytimeLowtideDates, setDaytimeLowtideDates] = useState<DaytimeLowtideData[]>([]);
-  const [selectedDates, setSelectedDates] = useState<DaytimeLowtideData[]>([]);
-
+  const [lowtideEvents, setLowtideEvents] = useState<LowtideEventData[]>([]);
+  const [selectedDates, setSelectedDates] = useState<LowtideEventData[]>([]);
 
   const allDatesAreSelected = useMemo(() => {
-    return daytimeLowtideDates.length === selectedDates.length;
-  }, [daytimeLowtideDates.length, selectedDates.length]);
+    return lowtideEvents.length === selectedDates.length;
+  }, [lowtideEvents.length, selectedDates.length]);
 
   const selectAllDates = useCallback(() => {
-    setSelectedDates(daytimeLowtideDates);
-  }, [daytimeLowtideDates]);
+    setSelectedDates(lowtideEvents);
+  }, [lowtideEvents]);
 
   const deselectAllDates = useCallback(() => {
     setSelectedDates([]);
   }, []);
 
   const selectDate = useCallback(
-    (selectedDate: DaytimeLowtideData) => {
+    (selectedDate: LowtideEventData) => {
       setSelectedDates([...selectedDates, selectedDate]);
     },
     [selectedDates]
   );
 
   const unselectDate = useCallback(
-    (selectedDate: DaytimeLowtideData) => {
+    (selectedDate: LowtideEventData) => {
       const i = selectedDates.findIndex(
         date => date.sunrise === selectedDate.sunrise
       );
@@ -70,15 +69,17 @@ function DaytimeLowtideFinder() {
 
   useEffect(() => {
     if (stationData) {
-      setDaytimeLowtideDates(filterTides(tideTarget, tideThreshold, stationData));
+      setLowtideEvents(
+        filterDaytimeTides(tideTarget, tideThreshold, stationData)
+      );
       setSelectedDates([]);
     }
-  }, [setDaytimeLowtideDates, stationData, tideTarget, tideThreshold]);
+  }, [setLowtideEvents, stationData, tideTarget, tideThreshold]);
 
   return (
     <div>
       <header className="header">
-        <h1>Daytime Lowtide Finder</h1>
+        <h1>Tide Finder</h1>
       </header>
       <main>
         <Controls
@@ -94,7 +95,7 @@ function DaytimeLowtideFinder() {
           tideThreshold={tideThreshold}
         />
         <Results
-          daytimeLowtideDates={daytimeLowtideDates}
+          lowtideEvents={lowtideEvents}
           selectDate={selectDate}
           selectedDates={selectedDates}
           unselectDate={unselectDate}
@@ -112,4 +113,4 @@ function DaytimeLowtideFinder() {
   );
 }
 
-export default DaytimeLowtideFinder;
+export default App;

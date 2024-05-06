@@ -1,11 +1,11 @@
 import {
   type StationData,
   type TidePrediction,
-  type DaytimeLowtideData,
+  type LowtideEventData,
 } from '../types';
 import { formatDateTZ } from './parse';
 
-export function filterTides(
+export function filterDaytimeTides(
   tideTarget: number,
   threshold: number,
   stationData: StationData
@@ -23,7 +23,7 @@ export function filterTides(
     {}
   );
 
-  return solarData.reduce<DaytimeLowtideData[]>((acc, solarDay) => {
+  return solarData.reduce<LowtideEventData[]>((acc, solarDay) => {
     const tides = tidesByDate[formatDateTZ(solarDay.sunrise, timezone)];
 
     const sunriseTarget = new Date(
