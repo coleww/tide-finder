@@ -9,7 +9,8 @@ function createTideEvent(
   stationId: string
 ) {
   const { title, lat, lng } = metadata;
-  const { lowtide, sunrise, sunset, tides } = lowtideData;
+  const { lowtide, solarData, tides } = lowtideData;
+  const { sunrise, sunset } = solarData;
   const description = [
     `- sunrise ${formatTimeTZ(sunrise, timezone)}`,
     ...tides.map(

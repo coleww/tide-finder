@@ -41,7 +41,7 @@ function App() {
   const unselectDate = useCallback(
     (selectedDate: LowtideEventData) => {
       const i = selectedDates.findIndex(
-        date => date.sunrise === selectedDate.sunrise
+        date => date.solarData.sunrise === selectedDate.solarData.sunrise
       );
       setSelectedDates([
         ...selectedDates.slice(0, i),

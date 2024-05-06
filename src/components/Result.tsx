@@ -20,12 +20,13 @@ function Result({
   selectDate,
   selectedDates,
 }: ResultProps) {
-  const { sunrise, sunset, tides } = lowtideData;
+  const { solarData, tides } = lowtideData;
+  const { sunrise, sunset } = solarData;
 
   const date = formatDateTZ(sunrise, timezone);
 
   const isSelected = useMemo(() => {
-    return Boolean(selectedDates.find(date => date.sunrise === sunrise));
+    return Boolean(selectedDates.find(date => date.solarData.sunrise === sunrise));
   }, [selectedDates, sunrise]);
 
   const toggleCheckbox = useCallback(() => {

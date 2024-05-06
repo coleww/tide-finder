@@ -16,6 +16,7 @@ export type Metadata = {
 };
 
 export type SolarData = {
+  lunarIlluminosity: number;
   sunrise: Date;
   sunset: Date;
 };
@@ -28,8 +29,7 @@ export type StationData = {
 };
 
 export type LowtideEventData = {
-  sunrise: Date;
-  sunset: Date;
+  solarData: SolarData;
   tides: TidePrediction[];
   lowtide: TidePrediction;
 };

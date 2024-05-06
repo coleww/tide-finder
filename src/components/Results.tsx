@@ -37,7 +37,7 @@ function Results({
         {lowtideEvents.map(le => {
           return (
             <Result
-              key={formatDateTZ(le.sunrise, timezone)}
+              key={formatDateTZ(le.solarData.sunrise, timezone)}
               lowtideData={le}
               timezone={timezone}
               tideTarget={tideTarget}
