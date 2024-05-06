@@ -1,22 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getStationData } from '../utils/api';
-import { type StationData, modesEnum } from '../types';
+import { modesEnum } from '../types';
 import Controls from './Controls';
 import Results from './Results';
 import { handleDownload } from '../utils/calendar';
 import { filterDaytimeTides, filterFullmoonTides } from '../utils/filterTides';
-import { STATION_QP, getQueryParam, updateQueryParam } from '../utils/query';
 import { useMode } from '../hooks/useMode';
 import { useSelected } from '../hooks/useSelected';
+import { useStation } from '../hooks/useStation';
 
 import './App.css';
 
 function App() {
-  const [stationId, setStationId] = useState(getQueryParam(STATION_QP));
-  const [tideTarget, setTideTarget] = useState(0);
-  const [tideThreshold, setTideThreshold] = useState(0);
-  const [lunarThreshold, setLunarThreshold] = useState(0.99);
-  const [stationData, setStationData] = useState<StationData>();
+  const { mode, title, toggleMode } = useMode();
+
+  const {
+    stationId,
+    setStationId,
+    stationData,
+  } = useStation();
 
   const {
     lowtideEvents,
@@ -29,24 +30,16 @@ function App() {
     unselectDate,
   } = useSelected();
 
+  const [tideTarget, setTideTarget] = useState(0);
+  const [tideThreshold, setTideThreshold] = useState(0);
+  const [lunarThreshold, setLunarThreshold] = useState(0.99);
+
   const downloadCalendar = useCallback(() => {
     if (stationData && selectedDates.length) {
       const { metadata, timezone } = stationData;
       handleDownload(selectedDates, metadata, timezone, stationId);
     }
   }, [selectedDates, stationData, stationId]);
-
-  const { mode, title, toggleMode } = useMode();
-
-  useEffect(() => {
-    // TODO: are all NOAA tide stations 7 chars?
-    if (stationId.length === 7) {
-      updateQueryParam(STATION_QP, stationId);
-      getStationData(stationId).then(data => {
-        setStationData(data);
-      });
-    }
-  }, [stationId]);
 
   useEffect(() => {
     if (stationData) {
