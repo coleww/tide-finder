@@ -1,21 +1,21 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getStationData } from '../utils/api';
-import { type LowtideEventData, type StationData } from '../types';
+import { type StationData, modesEnum, type LowtideEventData } from '../types';
 import Controls from './Controls';
 import Results from './Results';
 import { handleDownload } from '../utils/calendar';
-import { filterDaytimeTides } from '../utils/filterTides';
+import { filterDaytimeTides, filterFullmoonTides } from '../utils/filterTides';
 import { STATION_QP, getQueryParam, updateQueryParam } from '../utils/query';
+import { useMode } from '../hooks/useMode';
 
 import './App.css';
-import { useMode } from '../hooks/useMode';
 
 function App() {
   const [stationId, setStationId] = useState(getQueryParam(STATION_QP));
   const [tideTarget, setTideTarget] = useState(0);
   const [tideThreshold, setTideThreshold] = useState(0);
+  const [lunarThreshold, setLunarThreshold] = useState(0.99);
   const [stationData, setStationData] = useState<StationData>();
-
   const [lowtideEvents, setLowtideEvents] = useState<LowtideEventData[]>([]);
   const [selectedDates, setSelectedDates] = useState<LowtideEventData[]>([]);
 
@@ -58,7 +58,7 @@ function App() {
     }
   }, [selectedDates, stationData, stationId]);
 
-  const { title, toggleMode } = useMode();
+  const { mode, title, toggleMode } = useMode();
 
   useEffect(() => {
     // TODO: are all NOAA tide stations 7 chars?
@@ -73,11 +73,21 @@ function App() {
   useEffect(() => {
     if (stationData) {
       setLowtideEvents(
-        filterDaytimeTides(tideTarget, tideThreshold, stationData)
+        mode === modesEnum.dtlt
+          ? filterDaytimeTides(tideTarget, tideThreshold, stationData)
+          : filterFullmoonTides(tideTarget, lunarThreshold, stationData)
       );
-      setSelectedDates([]);
+      deselectAllDates();
     }
-  }, [setLowtideEvents, stationData, tideTarget, tideThreshold]);
+  }, [
+    deselectAllDates,
+    lunarThreshold,
+    mode,
+    setLowtideEvents,
+    stationData,
+    tideTarget,
+    tideThreshold,
+  ]);
 
   return (
     <div>
@@ -87,6 +97,7 @@ function App() {
       </header>
       <main>
         <Controls
+          mode={mode}
           allDatesAreSelected={allDatesAreSelected}
           downloadCalendar={downloadCalendar}
           deselectAllDates={deselectAllDates}
@@ -94,12 +105,15 @@ function App() {
           setStationId={setStationId}
           setTideTarget={setTideTarget}
           setTideThreshold={setTideThreshold}
+          setLunarThreshold={setLunarThreshold}
           stationId={stationId}
           tideTarget={tideTarget}
+          lunarThreshold={lunarThreshold}
           tideThreshold={tideThreshold}
         />
         <Results
           lowtideEvents={lowtideEvents}
+          mode={mode}
           selectDate={selectDate}
           selectedDates={selectedDates}
           unselectDate={unselectDate}

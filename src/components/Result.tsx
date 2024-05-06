@@ -1,10 +1,11 @@
-import { type LowtideEventData } from '../types';
+import { type LowtideEventData, type Mode, modesEnum } from '../types';
 import { formatDateTZ, formatTimeTZ } from '../utils/parse';
 import './Result.css';
 import { useMemo, type ReactNode, useCallback } from 'react';
 
 type ResultProps = {
   lowtideData: LowtideEventData;
+  mode: Mode;
   timezone: string;
   tideTarget: number;
   selectDate: (date: LowtideEventData) => void;
@@ -14,6 +15,7 @@ type ResultProps = {
 
 function Result({
   lowtideData,
+  mode,
   tideTarget,
   timezone,
   unselectDate,
@@ -21,12 +23,14 @@ function Result({
   selectedDates,
 }: ResultProps) {
   const { solarData, tides } = lowtideData;
-  const { sunrise, sunset } = solarData;
+  const { lunarIlluminosity, sunrise, sunset } = solarData;
 
   const date = formatDateTZ(sunrise, timezone);
 
   const isSelected = useMemo(() => {
-    return Boolean(selectedDates.find(date => date.solarData.sunrise === sunrise));
+    return Boolean(
+      selectedDates.find(date => date.solarData.sunrise === sunrise)
+    );
   }, [selectedDates, sunrise]);
 
   const toggleCheckbox = useCallback(() => {
@@ -72,7 +76,15 @@ function Result({
         <input type="checkbox" checked={isSelected} onChange={toggleCheckbox} />
       </div>
       <table className="result-table">
-        <tbody>{rows}</tbody>
+        <tbody>
+          {mode === modesEnum.fmlt ? (
+            <tr>
+              <td>Moon</td>
+              <td>{Math.trunc(lunarIlluminosity * 100)}%</td>
+            </tr>
+          ) : null}
+          {rows}
+        </tbody>
       </table>
     </div>
   );

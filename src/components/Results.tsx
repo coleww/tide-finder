@@ -1,10 +1,11 @@
-import { type StationData, type LowtideEventData } from '../types';
+import { type StationData, type LowtideEventData, type Mode } from '../types';
 import './Results.css';
 import Result from './Result';
 import { formatDateTZ } from '../utils/parse';
 
 type ResultsProps = {
   tideTarget: number;
+  mode: Mode;
   stationData?: StationData;
   lowtideEvents: LowtideEventData[];
   selectDate: (date: LowtideEventData) => void;
@@ -14,6 +15,7 @@ type ResultsProps = {
 
 function Results({
   lowtideEvents,
+  mode,
   stationData,
   tideTarget,
   unselectDate,
@@ -39,6 +41,7 @@ function Results({
             <Result
               key={formatDateTZ(le.solarData.sunrise, timezone)}
               lowtideData={le}
+              mode={mode}
               timezone={timezone}
               tideTarget={tideTarget}
               selectDate={selectDate}

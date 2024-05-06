@@ -1,9 +1,13 @@
+import { useCallback } from 'react';
 import './Controls.css';
+import { type Mode, modesEnum } from '../types';
 
 type ControlsProps = {
+  mode: Mode;
   stationId: string;
   tideTarget: number;
   tideThreshold: number;
+  lunarThreshold: number;
   allDatesAreSelected: boolean;
   deselectAllDates: () => void;
   downloadCalendar: () => void;
@@ -11,9 +15,11 @@ type ControlsProps = {
   setStationId: (id: string) => void;
   setTideTarget: (target: number) => void;
   setTideThreshold: (target: number) => void;
+  setLunarThreshold: (target: number) => void;
 };
 
 function Controls({
+  mode,
   stationId,
   allDatesAreSelected,
   downloadCalendar,
@@ -23,15 +29,17 @@ function Controls({
   tideTarget,
   setTideTarget,
   tideThreshold,
+  lunarThreshold,
   setTideThreshold,
+  setLunarThreshold,
 }: ControlsProps) {
-  const toggleSelectAll = () => {
+  const toggleSelectAll = useCallback(() => {
     if (allDatesAreSelected) {
       deselectAllDates();
     } else {
       selectAllDates();
     }
-  };
+  }, [allDatesAreSelected, deselectAllDates, selectAllDates]);
 
   return (
     <div className="controls-container">
@@ -78,21 +86,39 @@ function Controls({
           </datalist>
         </div>
 
-        <div className="control-wrapper">
-          <input
-            type="range"
-            min="0"
-            max="60"
-            step="5"
-            name="tide-threshold"
-            className="control-input"
-            value={tideThreshold}
-            onChange={e => setTideThreshold(Number(e.target.value))}
-          />
-          <label htmlFor="tide-threshold">
-            Within {tideThreshold} minutes of sunrise/sunset
-          </label>
-        </div>
+        {mode === modesEnum.dtlt ? (
+          <div className="control-wrapper">
+            <input
+              type="range"
+              min="0"
+              max="60"
+              step="5"
+              name="tide-threshold"
+              className="control-input"
+              value={tideThreshold}
+              onChange={e => setTideThreshold(Number(e.target.value))}
+            />
+            <label htmlFor="tide-threshold">
+              Within {tideThreshold} minutes of sunrise/sunset
+            </label>
+          </div>
+        ) : (
+          <div className="control-wrapper">
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              name="lundar-threshold"
+              className="control-input"
+              value={lunarThreshold}
+              onChange={e => setLunarThreshold(Number(e.target.value))}
+            />
+            <label htmlFor="lunar-threshold">
+              Moon at least {lunarThreshold * 100}% full
+            </label>
+          </div>
+        )}
       </div>
 
       <div className="download-wrapper">
