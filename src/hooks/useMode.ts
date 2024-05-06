@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { getQueryParam, MODE_QP } from '../utils/query';
+import { getQueryParam, MODE_QP, updateQueryParam } from '../utils/query';
 
 export const modes: Record<string, string> = {
   dtlt: 'dtlt',
@@ -19,7 +19,9 @@ export function useMode() {
   );
 
   const toggleMode = useCallback(() => {
-    mode === modes.dtlt ? setMode(modes.fmlt) : setMode(modes.dtlt);
+    const newMode = mode === modes.dtlt ? modes.fmlt : modes.dtlt;
+    setMode(newMode);
+    updateQueryParam(MODE_QP, newMode)
   }, [mode]);
 
   const title = modeStrings[mode];
