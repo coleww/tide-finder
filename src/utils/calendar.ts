@@ -24,9 +24,9 @@ function createTideEvent(
     title: `${lowtide.tide}ft ${title}`,
     description,
     location: title,
-    // url: `/daytime-lowtide-finder?station_id=${stationId}`,
+    url: `https://colewillsea.net/daytime-lowtide-finder/?station_id=${stationId}`,
     geo: { lat: lat, lon: lng },
-    // categories: ['low tide',],
+    categories: ['low tide'],
   };
 }
 
