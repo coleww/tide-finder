@@ -11,7 +11,7 @@ import { useStation } from '../hooks/useStation';
 import './App.css';
 
 function App() {
-  const { mode, title, toggleMode } = useMode();
+  const { mode, title } = useMode();
 
   const {
     stationId,
@@ -64,7 +64,7 @@ function App() {
     <div>
       <header className="header">
         <h1>{title}</h1>
-        <button onClick={toggleMode}>Toggle Mode</button>
+        {/* <button onClick={toggleMode}>Toggle Mode</button> */}
       </header>
       <main>
         <Controls
