@@ -108,7 +108,7 @@ function Controls({
               type="range"
               min="0"
               max="1"
-              step="0.1"
+              step="0.01"
               name="lundar-threshold"
               className="control-input"
               value={lunarThreshold}
