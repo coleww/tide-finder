@@ -80,7 +80,7 @@ function Result({
           {mode === modesEnum.fmlt ? (
             <tr>
               <td>Moon</td>
-              <td>{Math.trunc(lunarIlluminosity * 100)}%</td>
+              <td>{Math.trunc(lunarIlluminosity * 100)}% full</td>
             </tr>
           ) : null}
           {rows}
