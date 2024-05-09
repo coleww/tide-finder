@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/daytime-lowtide-finder/static/css/main.e3798874.css",
-    "main.js": "/daytime-lowtide-finder/static/js/main.140dff40.js",
-    "static/js/97.4efa0057.chunk.js": "/daytime-lowtide-finder/static/js/97.4efa0057.chunk.js",
-    "index.html": "/daytime-lowtide-finder/index.html",
-    "main.e3798874.css.map": "/daytime-lowtide-finder/static/css/main.e3798874.css.map",
-    "main.140dff40.js.map": "/daytime-lowtide-finder/static/js/main.140dff40.js.map",
-    "97.4efa0057.chunk.js.map": "/daytime-lowtide-finder/static/js/97.4efa0057.chunk.js.map"
+    "main.css": "/tide-finder/static/css/main.e3798874.css",
+    "main.js": "/tide-finder/static/js/main.02e12d8f.js",
+    "static/js/97.3068ba19.chunk.js": "/tide-finder/static/js/97.3068ba19.chunk.js",
+    "index.html": "/tide-finder/index.html",
+    "main.e3798874.css.map": "/tide-finder/static/css/main.e3798874.css.map",
+    "main.02e12d8f.js.map": "/tide-finder/static/js/main.02e12d8f.js.map",
+    "97.3068ba19.chunk.js.map": "/tide-finder/static/js/97.3068ba19.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e3798874.css",
-    "static/js/main.140dff40.js"
+    "static/js/main.02e12d8f.js"
   ]
 }
