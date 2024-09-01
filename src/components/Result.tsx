@@ -27,6 +27,9 @@ function Result({
 
   const date = formatDateTZ(sunrise, timezone);
 
+  const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][sunrise.getDay()]
+  const isWeekend = [0, 6].includes(sunrise.getDay())
+
   const isSelected = useMemo(() => {
     return Boolean(
       selectedDates.find(date => date.solarData.sunrise === sunrise)
@@ -71,8 +74,8 @@ function Result({
       className={`result ${isSelected ? 'selected' : ''}`}
       onClick={toggleCheckbox}
     >
-      <div className="date">
-        {date}{' '}
+      <div className={`date  ${isWeekend ? 'weekend' : ''}`}>
+        {dayOfWeek}{' '}{date}{' '}
         <input type="checkbox" checked={isSelected} onChange={toggleCheckbox} />
       </div>
       <table className="result-table">

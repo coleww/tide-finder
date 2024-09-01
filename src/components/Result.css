@@ -12,6 +12,10 @@
   border: 2px solid blue;
 }
 
+.weekend {
+  font-weight: bold;
+}
+
 .date {
   margin: 6px;
   display: flex;
