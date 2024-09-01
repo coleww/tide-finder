@@ -65,6 +65,13 @@ function Controls({
           </label>
         </div>
 
+        <div>
+          <button onClick={() => setStationId('9414906')}>marin headlands</button>
+          <button onClick={() => setStationId('9414275')}>sf ocean beach</button>
+          <button onClick={() => setStationId('9414816')}>berkeley</button>
+          <button onClick={() => setStationId('9414782')}>yerba buena island</button>
+        </div>
+
         <div className="control-wrapper">
           <input
             className="control-input"
